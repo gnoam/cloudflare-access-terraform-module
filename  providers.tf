@@ -3,11 +3,12 @@ terraform {
   required_providers {
     cloudflare = {
       source = "cloudflare/cloudflare"
-      version = "3.33.1"
-    }
-    awscc = {
-      source  = "hashicorp/awscc"
-      version = ">= 0.24.0"
+      version = "4.0.0-rc1"
+#      version = "~> 3.1"
     }
   }
+}
+
+provider "cloudflare" {
+  api_token = var.api_token
 }
