@@ -82,3 +82,21 @@ variable "access_group_include" {
     { email = ["temp@gmail.com"] }
   ]
 }
+
+variable "access_group_require" {
+  default = [
+    {
+      email = ["test@test.com"]
+      ip_list = ["8.8.8.8/32"]
+    }
+  ]
+}
+
+variable "access_group_exclude" {
+  default = [
+    {
+      email = ["test@gmail.com"]
+      ip_list = ["127.0.0.1/32"]
+    }
+  ]
+}
