@@ -34,7 +34,7 @@ variable "application_type" {
 
 variable "cors" {
   description = "A list of CORS configuration objects. Each object should contain the following keys: allowed_methods, allowed_origins, allow_credentials, max_age."
-  type        = set(object({
+  type = set(object({
     allowed_methods   = string
     allowed_origins   = list(string)
     allow_credentials = bool
@@ -49,27 +49,28 @@ variable "session_duration" {
   default     = "24h"
 }
 
-variable "saas_app" {
-  description = "SaaS configuration for the Access Application. Required when application_type is set to saas"
-  type        = set(object({
-    consumer_service_url = string
-    sp_entity_id         = string
-    name_id_format       = string
-  }))
-  default = []
-}
+#variable "saas_app" {
+#  description = "SaaS configuration for the Access Application. Required when application_type is set to saas"
+#  type = set(object({
+#    consumer_service_url = string
+#    sp_entity_id         = string
+#    name_id_format       = string
+#  }))
+#  default = []
+#}
 
-variable "config" {
-  type = set(object({
-    background_color = string
-    text_color       = string
-    logo_path        = string
-    header_text      = string
-    footer_text      = string
-  }))
-  default = []
-}
-
+#variable "config" {
+#  description = "app config"
+#  type = set(object({
+#    background_color = string
+#    text_color       = string
+#    logo_path        = string
+#    header_text      = string
+#    footer_text      = string
+#  }))
+#  default = []
+#}
+#
 variable "is_ui_read_only" {
   type        = bool
   description = "When set to true, this will disable all editing of Access resources via the Zero Trust Dashboard"
@@ -78,24 +79,29 @@ variable "is_ui_read_only" {
 
 variable "access_group_include" {
   description = "A series of access conditions"
+  type        = list(any)
   default = [
     { email = ["temp@gmail.com"] }
   ]
 }
 
 variable "access_group_require" {
+  description = "A series of access conditions to require"
+  type        = list(any)
   default = [
     {
-      email = ["test@test.com"]
+      email   = ["test@test.com"]
       ip_list = ["8.8.8.8/32"]
     }
   ]
 }
 
 variable "access_group_exclude" {
+  description = "A series of access conditions to exclude"
+  type        = list(any)
   default = [
     {
-      email = ["test@gmail.com"]
+      email   = ["test@gmail.com"]
       ip_list = ["127.0.0.1/32"]
     }
   ]

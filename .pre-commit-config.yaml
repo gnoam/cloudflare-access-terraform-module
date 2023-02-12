@@ -1,9 +1,5 @@
-fail_fast: false
-minimum_pre_commit_version: "2.6.0"
-
 repos:
-  -
-    repo: https://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: 3298ddab3c13dd77d6ce1fc0baf97691430d84b0
     hooks:
       - id: check-added-large-files
@@ -30,8 +26,6 @@ repos:
       - id: terraform_providers_lock
       - id: terraform_tflint
         exclude: 'examples/.*'
-        args:
-          - "--args=--config=__GIT_WORKING_DIR__/.tflint.hcl"
       - id: terraform_tfsec
         args:
           - "--args=--exclude-downloaded-modules"
