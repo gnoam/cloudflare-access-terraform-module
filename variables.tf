@@ -81,28 +81,40 @@ variable "access_group_include" {
   description = "A series of access conditions"
   type        = list(any)
   default = [
-    { email = ["temp@gmail.com"] }
+    { email = ["temp@gmail.com"]
+      ip    = ["0.0.0.0/0"]
+
+    }
   ]
 }
 
 variable "access_group_require" {
   description = "A series of access conditions to require"
   type        = list(any)
-  default = [
-    {
-      email   = ["test@test.com"]
-      ip_list = ["8.8.8.8/32"]
-    }
-  ]
+  default     = [{}]
 }
 
 variable "access_group_exclude" {
   description = "A series of access conditions to exclude"
   type        = list(any)
-  default = [
-    {
-      email   = ["test@gmail.com"]
-      ip_list = ["127.0.0.1/32"]
-    }
-  ]
+  default     = [{}]
+}
+
+variable "organization_login_design" {
+  description = "A design configuration for the organization access page"
+  type = object({
+    background_color = string
+    text_color       = string
+    logo_path        = string
+    header_text      = string
+    footer_text      = string
+  })
+
+  default = {
+    background_color = "#000000"
+    text_color       = "#ffffff"
+    logo_path        = ""
+    header_text      = ""
+    footer_text      = ""
+  }
 }

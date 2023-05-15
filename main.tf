@@ -6,13 +6,13 @@ resource "cloudflare_access_organization" "organization" {
   is_ui_read_only = var.is_ui_read_only
 
   #TODO
-  #  login_design {
-  #    background_color = "#ffffff"
-  #    text_color       = "#000000"
-  #    logo_path        = "https://example.com/logo.png"
-  #    header_text      = "My header text"
-  #    footer_text      = "My footer text"
-  #  }
+  login_design {
+    background_color = var.organization_login_design.background_color
+    text_color       = var.organization_login_design.text_color
+    logo_path        = var.organization_login_design.logo_path
+    header_text      = var.organization_login_design.header_text
+    footer_text      = var.organization_login_design.footer_text
+  }
 }
 
 resource "cloudflare_access_application" "application" {
@@ -31,6 +31,8 @@ resource "cloudflare_access_application" "application" {
       max_age           = cors_headers.value.max_age
     }
   }
+
+  depends_on = [cloudflare_access_organization.organization]
 }
 
 resource "cloudflare_access_group" "group" {
@@ -56,14 +58,14 @@ resource "cloudflare_access_group" "group" {
       login_method            = lookup(include.value, "login_method", null)
 
       dynamic "azure" {
-        for_each = lookup(include.value, "azure", null)
+        for_each = lookup(include.value, "azure", {})
         content {
           identity_provider_id = azure.value.identity_provider_id
         }
       }
 
       dynamic "external_evaluation" {
-        for_each = lookup(include.value, "external_evaluation", null)
+        for_each = lookup(include.value, "external_evaluation", {})
         content {
           evaluate_url = external_evaluation.value.evaluate_url
           keys_url     = external_evaluation.value.keys_url
@@ -71,7 +73,7 @@ resource "cloudflare_access_group" "group" {
       }
 
       dynamic "github" {
-        for_each = lookup(include.value, "github", null)
+        for_each = lookup(include.value, "github", {})
         content {
           identity_provider_id = github.value.identity_provider_id
           name                 = github.value.name
@@ -80,7 +82,7 @@ resource "cloudflare_access_group" "group" {
       }
 
       dynamic "gsuite" {
-        for_each = lookup(include.value, "gsuite", null)
+        for_each = lookup(include.value, "gsuite", {})
         content {
           identity_provider_id = gsuite.value.identity_provider_id
           email                = gsuite.value.email
@@ -88,7 +90,7 @@ resource "cloudflare_access_group" "group" {
       }
 
       dynamic "okta" {
-        for_each = lookup(include.value, "okta", null)
+        for_each = lookup(include.value, "okta", {})
         content {
           identity_provider_id = okta.value.identity_provider_id
           name                 = okta.value.name
@@ -96,7 +98,7 @@ resource "cloudflare_access_group" "group" {
       }
 
       dynamic "saml" {
-        for_each = lookup(include.value, "saml", null)
+        for_each = lookup(include.value, "saml", {})
         content {
           attribute_name       = saml.value.attribute_name
           attribute_value      = saml.value.attribute_value
@@ -125,14 +127,14 @@ resource "cloudflare_access_group" "group" {
       login_method            = lookup(require.value, "login_method", null)
 
       dynamic "azure" {
-        for_each = lookup(require.value, "azure", null)
+        for_each = lookup(require.value, "azure", {})
         content {
           identity_provider_id = azure.value.identity_provider_id
         }
       }
 
       dynamic "external_evaluation" {
-        for_each = lookup(require.value, "external_evaluation", null)
+        for_each = lookup(require.value, "external_evaluation", {})
         content {
           evaluate_url = external_evaluation.value.evaluate_url
           keys_url     = external_evaluation.value.keys_url
@@ -140,7 +142,7 @@ resource "cloudflare_access_group" "group" {
       }
 
       dynamic "github" {
-        for_each = lookup(require.value, "github", null)
+        for_each = lookup(require.value, "github", {})
         content {
           identity_provider_id = github.value.identity_provider_id
           name                 = github.value.name
@@ -149,7 +151,7 @@ resource "cloudflare_access_group" "group" {
       }
 
       dynamic "gsuite" {
-        for_each = lookup(require.value, "gsuite", null)
+        for_each = lookup(require.value, "gsuite", {})
         content {
           identity_provider_id = gsuite.value.identity_provider_id
           email                = gsuite.value.email
@@ -157,7 +159,7 @@ resource "cloudflare_access_group" "group" {
       }
 
       dynamic "okta" {
-        for_each = lookup(require.value, "okta", null)
+        for_each = lookup(require.value, "okta", {})
         content {
           identity_provider_id = okta.value.identity_provider_id
           name                 = okta.value.name
@@ -165,7 +167,7 @@ resource "cloudflare_access_group" "group" {
       }
 
       dynamic "saml" {
-        for_each = lookup(require.value, "saml", null)
+        for_each = lookup(require.value, "saml", {})
         content {
           attribute_name       = saml.value.attribute_name
           attribute_value      = saml.value.attribute_value
@@ -194,14 +196,14 @@ resource "cloudflare_access_group" "group" {
       login_method            = lookup(exclude.value, "login_method", null)
 
       dynamic "azure" {
-        for_each = lookup(exclude.value, "azure", null)
+        for_each = lookup(exclude.value, "azure", {})
         content {
           identity_provider_id = azure.value.identity_provider_id
         }
       }
 
       dynamic "external_evaluation" {
-        for_each = lookup(exclude.value, "external_evaluation", null)
+        for_each = lookup(exclude.value, "external_evaluation", {})
         content {
           evaluate_url = external_evaluation.value.evaluate_url
           keys_url     = external_evaluation.value.keys_url
@@ -209,7 +211,7 @@ resource "cloudflare_access_group" "group" {
       }
 
       dynamic "github" {
-        for_each = lookup(exclude.value, "github", null)
+        for_each = lookup(exclude.value, "github", {})
         content {
           identity_provider_id = github.value.identity_provider_id
           name                 = github.value.name
@@ -218,7 +220,7 @@ resource "cloudflare_access_group" "group" {
       }
 
       dynamic "gsuite" {
-        for_each = lookup(exclude.value, "gsuite", null)
+        for_each = lookup(exclude.value, "gsuite", {})
         content {
           identity_provider_id = gsuite.value.identity_provider_id
           email                = gsuite.value.email
@@ -226,7 +228,7 @@ resource "cloudflare_access_group" "group" {
       }
 
       dynamic "okta" {
-        for_each = lookup(exclude.value, "okta", null)
+        for_each = lookup(exclude.value, "okta", {})
         content {
           identity_provider_id = okta.value.identity_provider_id
           name                 = okta.value.name
@@ -234,7 +236,7 @@ resource "cloudflare_access_group" "group" {
       }
 
       dynamic "saml" {
-        for_each = lookup(exclude.value, "saml", null)
+        for_each = lookup(exclude.value, "saml", {})
         content {
           attribute_name       = saml.value.attribute_name
           attribute_value      = saml.value.attribute_value
@@ -243,6 +245,8 @@ resource "cloudflare_access_group" "group" {
       }
     }
   }
+
+  depends_on = [cloudflare_access_organization.organization]
 }
 
 resource "cloudflare_access_policy" "app_policy" {
