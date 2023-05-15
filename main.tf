@@ -1,7 +1,8 @@
 resource "cloudflare_access_organization" "organization" {
-  account_id      = var.account_id
-  name            = var.name
-  auth_domain     = "${var.name}.cloudflareaccess.com"
+  account_id  = var.account_id
+  name        = var.name
+  auth_domain = "${var.name}.cloudflareaccess.com"
+
   is_ui_read_only = var.is_ui_read_only
 
   #TODO
