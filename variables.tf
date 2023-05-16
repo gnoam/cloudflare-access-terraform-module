@@ -59,18 +59,6 @@ variable "session_duration" {
 #  default = []
 #}
 
-#variable "config" {
-#  description = "app config"
-#  type = set(object({
-#    background_color = string
-#    text_color       = string
-#    logo_path        = string
-#    header_text      = string
-#    footer_text      = string
-#  }))
-#  default = []
-#}
-#
 variable "is_ui_read_only" {
   type        = bool
   description = "When set to true, this will disable all editing of Access resources via the Zero Trust Dashboard"
@@ -113,8 +101,8 @@ variable "organization_login_design" {
   default = {
     background_color = "#000000"
     text_color       = "#ffffff"
-    logo_path        = ""
-    header_text      = ""
-    footer_text      = ""
+    logo_path        = "https://www.example.com/logo.png"
+    header_text      = "Sample Header Text"
+    footer_text      = "Sample Footer Text"
   }
 }

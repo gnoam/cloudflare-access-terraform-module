@@ -24,9 +24,9 @@ repos:
       - id: terraform_docs
         args:
           - "--args=--lockfile=false"
-#      - id: terraform_providers_lock
-#      - id: terraform_tflint
-#        exclude: 'examples/.*'
+          - "--args=--output-file=README.md"
+          - "--args=--output-mode=inject"
+      - id: terraform_providers_lock
       - id: terraform_tfsec
         args:
           - "--args=--exclude-downloaded-modules"
